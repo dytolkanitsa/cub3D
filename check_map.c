@@ -10,21 +10,151 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "includes/cub3D.h"
 
-void	right_simbols_in_map(t_lst *lst, t_map *map)
+char static	ft_check(char c, const char *set)
+{
+	int	i;
+
+	i = 0;
+	while (set[i])
+	{
+		if (set[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	right_simbols_in_map(t_lst *lst, t_map map) // валидные символы
 {
 	int	i;
 	int	j;
 
-	while (map->map[i])
+	i = 0;
+	while (map.map[i])
 	{
 		j = 0;
-		while (map->map[i][j])
+		while (map.map[i][j])
 		{
-			
+			if (!ft_check(map.map[i][j], "10 NESW"))
+			{
+				lst->error = BAD_MAP;
+				return (1); // плохо
+			}
+			j++;
 		}
+		i++;
 	}
+	return(0); // хорошо
+}
+
+int	how_many_players(t_lst *lst, t_map map) // больше одного игрока
+{
+	int	i;
+	int	j;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (map.map[i])
+	{
+		j = 0;
+		while (map.map[i][j])
+		{
+			if (ft_check(map.map[i][j], "NSEW"))
+				count++;
+			j++;
+		}
+		i++;
+	}
+	if (count != 1)
+	{
+		lst->error = BAD_MAP;
+		return (1); // плохо
+	}
+	return (0); // хорошо
+}
+
+int	check_line_for_wals(char *line, char *next, char *last)
+{
+	int	i;
+
+	i = 0;
+	printf("%s\n", line);
+	while (line[i] == ' ')
+		i++;
+	while (line[i])
+	{
+		if (!ft_check(line[i], " 10NWSE") || ((line[i + 1] == ' ' || line[i - 1] == ' ') && line[i] != '1'))
+			return (1);
+		if (line[i] == '0' && next[i] == ' ' || line[i] == '0' && last[i] == ' ')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	ft_splitlen(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+int	check_first_last_line(char *line)
+{
+	int	i;
+
+	i = 0;
+	printf("%s\n", line);
+	while (line[i] == ' ')
+		i++;
+	while (line[i])
+	{
+		if (!ft_check(line[i], " 1") || ((line[i + 1] == ' ' || line[i - 1] == ' ') && line[i] != '1'))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	if_surrounded_by_wals(t_lst *lst, t_map map)
+{
+	int	i;
+	int	len;
+
+	len = ft_splitlen(map.map);
+	printf("%d\n", len);
+	i = 0;
+	while (map.map[i])
+	{
+		if (i == 0)
+		{
+			printf("tut\n");
+			if (check_first_last_line(map.map[0]))
+			{
+				lst->error = BAD_MAP;
+				return (1); // плохо
+			}
+			else
+				i++;
+		}
+		else 
+		{
+			printf("zdes\n");
+			if (check_line_for_wals(map.map[i], map.map[i + 1], map.map[i - 1]))
+			{
+				lst->error = BAD_MAP;
+				return (1); // плохо
+			}
+		}
+		i++;
+	}
+	return (0); // хорошо
 }
 
 void	check_map(t_lst *lst)
@@ -45,4 +175,12 @@ void	check_map(t_lst *lst)
 		ft_putstr_fd("Error: Invalid resolution\n", 1);
 	ft_putstr_fd("Quit cub3D\n", 1);
 	exit (0);
+}
+
+void	main_check(t_lst *lst, t_map map)
+{
+	if (right_simbols_in_map(lst, map) == 1 || how_many_players(lst, map) == 1 || if_surrounded_by_wals(lst, map) == 1)
+		check_map(lst);
+	else
+		printf("everything is ok");
 }

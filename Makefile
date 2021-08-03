@@ -2,7 +2,7 @@ NAME = cub3D
 
 HEADER = includes/cub3D.h
 
-LIST = cub3D.c
+LIST = cub3D.c check_map.c
 
 LIST_UTILS = $(shell find ./utils -name "*.c")
 
@@ -10,7 +10,7 @@ LIST_MAP = $(shell find ./work_with_map -name "*.c")
 
 FLAGS = 
 
-FLAGS_MLX = -lmlx -framework OpenGL -framework AppKit
+# FLAGS_MLX = -lmlx -framework OpenGL -framework AppKit
 
 OBJ = $(LIST:.c=.o)
 
@@ -26,7 +26,7 @@ all : $(NAME)
 	gcc -g $(FLAGS) -I $(HEADER) -c $< -o $@
 
 ${NAME} : $(OBJ) $(OBJ_UTILS) $(OBJ_MAP) $(HEADER)
-	gcc $(FLAGS) $(FLAGS_MLX) $(OBJ) $(OBJ_UTILS) $(OBJ_MAP) -o $(NAME)
+	gcc $(FLAGS) $(OBJ) $(OBJ_UTILS) $(OBJ_MAP) -o $(NAME)
 
 clean :
 	$(RM) $(OBJ) $(OBJ_UTILS)

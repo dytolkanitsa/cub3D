@@ -32,13 +32,13 @@ void	parse_map(t_map *map, t_lst *lst)
 		i++;
 	}
 	map->map[i] = NULL;
-	i = 0;
-	while (map->map[i] != '\0')
-	{
-		ft_putstr_fd(map->map[i], 1);
-		ft_putchar_fd('\n', 1);
-		i++;
-	}
+	// i = 0;
+	// while (map->map[i] != NULL)
+	// {
+	// 	ft_putstr_fd(map->map[i], 1);
+	// 	ft_putchar_fd('\n', 1);
+	// 	i++;
+	// }
 }
 
 int	main(int argc, char **argv)
@@ -60,6 +60,7 @@ int	main(int argc, char **argv)
 	}
 	head = lst;
 	parse_map(&map, lst);
+	main_check(lst, map);
 	// // while (lst)
 	// {
 	// 	printf("%s\n", lst->str);

@@ -52,4 +52,5 @@ void	ft_putstr_fd(char *s, int fd);
 //work with map
 void	work_with_map(t_map *map, t_lst *lst);
 
+void	main_check(t_lst *lst, t_map map);
 #endif
