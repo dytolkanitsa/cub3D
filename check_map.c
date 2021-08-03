@@ -6,7 +6,7 @@
 /*   By: lgarg <lgarg@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 15:49:33 by lgarg             #+#    #+#             */
-/*   Updated: 2021/08/03 20:36:14 by lgarg            ###   ########.fr       */
+/*   Updated: 2021/08/03 21:13:27 by lgarg            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ int	check_line_for_wals(char *line, char *next, char *last) // все стены
 	int	i;
 
 	i = 0;
-	printf("%s\n", line);
 	while (line[i] == ' ')
 		i++;
 	while (line[i])
@@ -112,7 +111,6 @@ int	check_first_last_line(char *line) // чек верхней и нижней �
 	int	i;
 
 	i = 0;
-	printf("%s\n", line);
 	while (line[i] == ' ')
 		i++;
 	while (line[i])
@@ -130,13 +128,11 @@ int	if_surrounded_by_wals(t_lst *lst, t_map map)
 	int	len;
 
 	len = ft_splitlen(map.map);
-	printf("%d\n", len);
 	i = 0;
 	while (map.map[i])
 	{
 		if (i == 0 || i == len - 1)
 		{
-			printf("tut\n");
 			if (check_first_last_line(map.map[i]))
 			{
 				lst->error = BAD_MAP;
@@ -147,7 +143,6 @@ int	if_surrounded_by_wals(t_lst *lst, t_map map)
 		}
 		else 
 		{
-			printf("zdes\n");
 			if (check_line_for_wals(map.map[i], map.map[i + 1], map.map[i - 1]))
 			{
 				lst->error = BAD_MAP;
@@ -194,7 +189,6 @@ int	check_last_corner(char *line, char *last)
 int	check_corners(t_lst *lst, t_map map)
 {
 	int	i;
-	int	j;
 	int	len;
 
 	i = 0;
@@ -231,18 +225,6 @@ int	check_corners(t_lst *lst, t_map map)
 			else
 				i++;
 		}
-		// j = 0;
-		// while (map.map[i][j] == ' ')
-		// 	j++;
-		// while (map.map[i][j])
-		// {
-		// 	if (       (   (!map.map[i][j - 1] || map.map[i][j - 1] == ' ') || (!map.map[i][j + 1] || map.map[i][j + 1] == ' ')  )     &&     (map.map[i + 1][j] != '1' || map.map[i - 1][j] != '1'))
-		// 	{
-		// 		lst->error = BAD_MAP;
-		// 		return (1); // плохо
-		// 	}
-		// 	j++;
-		// }
 		i++;
 	}
 	return (0);
@@ -270,9 +252,8 @@ void	check_map(t_lst *lst)
 
 void	main_check(t_lst *lst, t_map map)
 {
-	// if (right_simbols_in_map(lst, map) == 1 || how_many_players(lst, map) == 1 || if_surrounded_by_wals(lst, map) == 1 \
-	// ||	check_nr_corner(lst, map) == 1)
-	if (check_corners(lst, map) == 1)
+	if (right_simbols_in_map(lst, map) == 1 || how_many_players(lst, map) == 1 || if_surrounded_by_wals(lst, map) == 1 \
+	|| check_corners(lst, map) == 1)
 		check_map(lst);
 	else
 		printf("everything is ok");
