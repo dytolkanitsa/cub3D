@@ -6,7 +6,7 @@
 /*   By: lgarg <lgarg@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 15:49:33 by lgarg             #+#    #+#             */
-/*   Updated: 2021/08/03 21:13:27 by lgarg            ###   ########.fr       */
+/*   Updated: 2021/08/04 17:52:16 by lgarg            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,22 +230,154 @@ int	check_corners(t_lst *lst, t_map map)
 	return (0);
 }
 
+char	*ft_strnstr(const char *big, const char *little, size_t len)
+{
+	size_t	lenght_l;
+
+	lenght_l = ft_strlen(little);
+	if (lenght_l == 0)
+		return ((char *)big);
+	while (len >= lenght_l)
+	{
+		if (*big == *little && (ft_strncmp(big, little, lenght_l) == 0))
+			return ((char *)big);
+		big++;
+		len--;
+	}
+	return (0);
+}
+
+int	dublicate_texture(t_lst *lst)
+{
+	int	no_count;
+	int	so_count;
+	int we_count;
+	int	ea_count;
+	t_lst	*head;
+
+	no_count = 0;
+	so_count = 0;
+	we_count = 0;
+	ea_count = 0;
+	head = lst;
+	while (lst)
+	{
+		if (ft_strnstr(lst->str, "NO ", 3) != 0)
+			no_count++;
+		else if (ft_strnstr(lst->str, "SO ", 3) != 0)
+			so_count++;
+		else if (ft_strnstr(lst->str, "WE ", 3) != 0)
+			we_count++;
+		else if (ft_strnstr(lst->str, "EA ", 3) != 0)
+			ea_count++;
+		lst = lst->next;
+	}
+	if (no_count > 1 || so_count > 1 || we_count > 1 || ea_count > 1)
+	{
+		lst = head;
+		lst->error = DUBLICATE_TEX;
+		return (1);
+	}
+	else if (no_count == 0 || so_count == 0 || we_count == 0 || ea_count == 0)
+	{
+		lst = head;
+		lst->error = NOT_ENOUGHT_TEX;
+		return (1);	
+	}
+	else
+		return (0);
+}
+
+int	dublicate_colour(t_lst *lst)
+{
+	int	f_count;
+	int	c_count;
+	t_lst	*head;
+
+	f_count = 0;
+	c_count = 0;
+	head = lst;
+	while (lst)
+	{
+		if (ft_strnstr(lst->str, "F ", 2) != 0)
+			f_count++;
+		if (ft_strnstr(lst->str, "C ", 2) != 0)
+			c_count++;
+		lst = lst->next;
+	}
+	if (f_count > 1 || c_count > 1)
+	{
+		lst = head;
+		lst->error = DUBLICATE_COLOUR;
+		return (1);
+	}
+	else if (f_count == 0 || c_count == 0)
+	{
+		lst = head;
+		lst->error = NOT_ENOUGHT_COLOUR;
+		return (1);
+	}
+	return (0);
+}
+
+int	check_key(char *line)
+{
+	if (ft_strncmp("NO ", line, 3) == 0) // нашел NO
+		return (0);
+	else if (ft_strncmp("SO ", line, 3) == 0)
+		return (0);
+	else if (ft_strncmp("WE ", line, 3) == 0)
+		return (0);
+	else if (ft_strncmp("EA ", line, 3) == 0)
+		return (0);
+	else if (ft_strncmp("F ", line, 2) == 0)
+		return (0);
+	else if (ft_strncmp("C ", line, 2) == 0)
+		return (0);
+	else if (line[0] == '\0')
+		return (0);
+	return (1);
+}
+
+int	right_key(t_lst *lst)
+{
+	int		i;
+	t_lst	*head;
+
+	i = 0;
+	head = lst;
+	while (i < 7)
+	{
+		if (check_key(lst->str) == 1)
+		{
+			lst = head;
+			lst->error = BAD_KEY;
+			return (1);
+		}
+		lst = lst->next;
+		i++;
+	}
+	return (0);
+}
+
 void	check_map(t_lst *lst)
 {
 	if (lst->error == BAD_MAP)
 		ft_putstr_fd("Error: Invalid map\n", 1);
 	else if (lst->error == DUBLICATE_TEX)
 		ft_putstr_fd("Error: Dublicte texture\n", 1);
-	else if (lst->error == DUBLICATE_RES)
-		ft_putstr_fd("Error: Dublicte resolution\n", 1);
+	else if (lst->error == NOT_ENOUGHT_TEX)
+		ft_putstr_fd("Error: Not enought textures\n", 1);
 	else if (lst->error == DUBLICATE_COLOUR)
 		ft_putstr_fd("Error: Dublicate colour\n", 1);
+	else if (lst->error == NOT_ENOUGHT_COLOUR)
+		ft_putstr_fd("Error: Not enought colour\n", 1);
 	else if (lst->error == BAD_TEXTURE)
 		ft_putstr_fd("Error: Texture error\n", 1);
+	else if (lst->error == BAD_KEY)
+		ft_putstr_fd("Error: Key error\n", 1);
 	else if (lst->error == BAD_COLOUR)
 		ft_putstr_fd("Error: Colour error\n", 1);
-	else if (lst->error == INVALID_RES)
-		ft_putstr_fd("Error: Invalid resolution\n", 1);
 	ft_putstr_fd("Quit cub3D\n", 1);
 	exit (0);
 }
@@ -253,8 +385,11 @@ void	check_map(t_lst *lst)
 void	main_check(t_lst *lst, t_map map)
 {
 	if (right_simbols_in_map(lst, map) == 1 || how_many_players(lst, map) == 1 || if_surrounded_by_wals(lst, map) == 1 \
-	|| check_corners(lst, map) == 1)
+	|| check_corners(lst, map) == 1 || lst->error != 0 || right_key(lst) == 1 || dublicate_texture(lst) == 1 \
+	|| dublicate_colour(lst) == 1)
+	{
 		check_map(lst);
+	}
 	else
 		printf("everything is ok\n");
 	// пока хз что с этим делать ок и ок что бубнить-то

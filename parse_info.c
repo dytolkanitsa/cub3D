@@ -192,7 +192,15 @@ int	ft_strncmp(const char *str1, const char *str2, size_t num)
 // 	return (red << 16 | green << 8 | blue);
 // }
 
-int	get_colour(char *line)
+int	ft_isdigit(int c)
+{
+	if (c >= 48 && c <= 57)
+		return (1);
+	else
+		return (0);
+}
+
+int	get_colour(char *line, t_lst *lst, t_map map)
 {
 	char **temp;
 	int	red;
@@ -202,19 +210,43 @@ int	get_colour(char *line)
 
 	temp = ft_split(line, ',');
 	if (ft_splitlen(temp) > 3)
-		return (1); // надо вызывать функцию ошибок
+	{
+		lst->error = BAD_COLOUR;
+		main_check(lst, map);
+	}
+	int	i;
+	int	j;
+
+	i = 0;
+	while (temp[i])
+	{
+		j = 0;
+		while (temp[i][j])
+		{
+			if (!ft_isdigit(temp[i][j]))
+			{
+				lst->error = BAD_COLOUR;
+				main_check(lst, map);	
+			}
+			j++;
+		}
+		i++;
+	}
 	red = ft_atoi(temp[0]);
 	green = ft_atoi(temp[1]);
 	blue = ft_atoi(temp[2]);
 	free(temp);
 	if (red > 255 || red < 0 || green > 255 || green < 0 || blue > 255 || blue < 0)
-		return (1); // вызвать функцию ошибок
+	{
+		lst->error = BAD_COLOUR;
+		main_check(lst, map);
+	}
 	// res = make_rgb_colour(red, green, blue);
 // то, что ниже, это кодирование отдельных компонентов RGB в целочисленное значение с помощью битового сдвига
 	return (red << 16 | green << 8 | blue);
 }
 
-void	get_path(char *line, t_paths *path)
+void	get_path(char *line, t_paths *path, t_lst *lst, t_map map)
 {
 	if (ft_strncmp("NO ", line, 3) == 0)
 		path->north_path = ft_strtrim(line + 3, " ");
@@ -225,19 +257,19 @@ void	get_path(char *line, t_paths *path)
 	else if (ft_strncmp("EA ", line, 3) == 0)
 		path->east_path = ft_strtrim(line + 3, " ");
 	else if (ft_strncmp("F ", line, 2) == 0)
-		path->floor_colour = get_colour(line + 2);
+		path->floor_colour = get_colour(line + 2, lst, map);
 	else if (ft_strncmp("C ", line, 2) == 0)
-		path->celling_colour = get_colour(line + 2);
+		path->celling_colour = get_colour(line + 2, lst, map);
 }
 
-void	parse_info(t_lst *lst, t_paths *path)
+void	parse_info(t_lst *lst, t_paths *path, t_map map)
 {
 	int	i;
 
 	i = 0;
 	while (i < 7)
 	{
-		get_path(lst->str, path);
+		get_path(lst->str, path, lst, map);
 		lst = lst->next;
 		i++;
 	}

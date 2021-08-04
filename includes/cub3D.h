@@ -6,7 +6,7 @@
 /*   By: lgarg <lgarg@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/01 14:01:02 by mjammie           #+#    #+#             */
-/*   Updated: 2021/08/02 17:54:03 by lgarg            ###   ########.fr       */
+/*   Updated: 2021/08/04 17:43:16 by lgarg            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@
 // # define BAD_FD
 # define BAD_MAP 1 // не обрамляется единицами, посторонние символы, несколько символов игрока
 # define DUBLICATE_TEX 2
-# define DUBLICATE_RES 3
-# define DUBLICATE_COLOUR 4
-# define BAD_TEXTURE 5
+# define DUBLICATE_COLOUR 3
+# define BAD_TEXTURE 4
+# define BAD_KEY 5
 # define BAD_COLOUR 6
-# define INVALID_RES 7
+# define NOT_ENOUGHT_TEX 7
+# define NOT_ENOUGHT_COLOUR 8
 // # define INVALID_KEY
 // # define INVALID_MAIN_ARG
 
@@ -57,11 +58,12 @@ t_lst	*ft_lstnew(void *content);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 int		ft_splitlen(char **str);
+int		ft_strncmp(const char *str1, const char *str2, size_t num);
 
 //work with map
 void	work_with_map(t_map *map, t_lst *lst);
 
 void	main_check(t_lst *lst, t_map map);
 
-void	parse_info(t_lst *lst, t_paths *path);
+void	parse_info(t_lst *lst, t_paths *path, t_map map);
 #endif

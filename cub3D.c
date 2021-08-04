@@ -6,7 +6,7 @@
 /*   By: lgarg <lgarg@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/01 14:00:18 by mjammie           #+#    #+#             */
-/*   Updated: 2021/08/02 20:05:57 by lgarg            ###   ########.fr       */
+/*   Updated: 2021/08/04 16:49:22 by lgarg            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,11 @@ int	main(int argc, char **argv)
 		ft_lstadd_back(&lst, ft_lstnew(line));
 	}
 	head = lst;
+	lst->error = 0;
 	parse_map(&map, lst);
 	main_check(lst, map);
-	parse_info(lst, &path);
+	parse_info(lst, &path, map);
+	printf("%d\n",lst->error);
 	// // while (lst)
 	// {
 	// 	printf("%s\n", lst->str);
