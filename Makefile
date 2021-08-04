@@ -2,7 +2,7 @@ NAME = cub3D
 
 HEADER = includes/cub3D.h
 
-LIST = cub3D.c check_map.c
+LIST = cub3D.c check_map.c parse_info.c
 
 LIST_UTILS = $(shell find ./utils -name "*.c")
 

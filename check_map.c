@@ -233,7 +233,7 @@ int	check_corners(t_lst *lst, t_map map)
 void	check_map(t_lst *lst)
 {
 	if (lst->error == BAD_MAP)
-		ft_putstr_fd("Error: Map error\n", 1);
+		ft_putstr_fd("Error: Invalid map\n", 1);
 	else if (lst->error == DUBLICATE_TEX)
 		ft_putstr_fd("Error: Dublicte texture\n", 1);
 	else if (lst->error == DUBLICATE_RES)
@@ -256,5 +256,6 @@ void	main_check(t_lst *lst, t_map map)
 	|| check_corners(lst, map) == 1)
 		check_map(lst);
 	else
-		printf("everything is ok");
+		printf("everything is ok\n");
+	// пока хз что с этим делать ок и ок что бубнить-то
 }

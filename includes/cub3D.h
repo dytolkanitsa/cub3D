@@ -26,11 +26,19 @@
 // # define INVALID_KEY
 // # define INVALID_MAIN_ARG
 
+typedef struct s_paths
+{
+	char	*north_path;
+	char	*south_path;
+	char	*west_path;
+	char	*east_path;
+	int		floor_colour;
+	int		celling_colour;
+}	t_paths;
+
 typedef struct s_map
 {
 	char	**map;
-	int		hight;
-	int		width;
 }				t_map;
 
 typedef struct s_lst
@@ -48,9 +56,12 @@ void	ft_lstadd_back(t_lst **lst, t_lst *new);
 t_lst	*ft_lstnew(void *content);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
+int		ft_splitlen(char **str);
 
 //work with map
 void	work_with_map(t_map *map, t_lst *lst);
 
 void	main_check(t_lst *lst, t_map map);
+
+void	parse_info(t_lst *lst, t_paths *path);
 #endif

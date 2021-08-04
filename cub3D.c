@@ -46,6 +46,7 @@ int	main(int argc, char **argv)
 	t_lst	*lst;
 	t_lst	*head;
 	t_map	map;
+	t_paths	path;
 	int		fd;
 	char	*line;
 
@@ -61,6 +62,7 @@ int	main(int argc, char **argv)
 	head = lst;
 	parse_map(&map, lst);
 	main_check(lst, map);
+	parse_info(lst, &path);
 	// // while (lst)
 	// {
 	// 	printf("%s\n", lst->str);
