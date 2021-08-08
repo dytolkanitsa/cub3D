@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjammie <mjammie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lgarg <lgarg@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/01 14:01:02 by mjammie           #+#    #+#             */
-/*   Updated: 2021/08/07 19:44:08 by mjammie          ###   ########.fr       */
+/*   Updated: 2021/08/08 10:27:07 by lgarg            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,12 @@ typedef struct s_paths
 	int		celling_colour;
 }	t_paths;
 
+typedef	struct	s_vectors
+{
+	int		x;
+	int		y;
+}	t_vectors;
+
 typedef struct s_lst
 {
 	char			*str;
@@ -74,7 +80,9 @@ typedef struct s_player
 	int			y;
 	double		pa;
 	double		posX;
+	double		prevX;
 	double		posY;
+	double		prevY;
 	double		dirX;
 	double		dirY;
 	double		planeX;
@@ -137,9 +145,41 @@ typedef struct s_all
 	int				**colors_sprite;
 	int				count;
 
+	double	cameraX;
+	double	rayDirX;
+	double	rayDirY;
+	double	sideDistX;
+	double	sideDistY;
+	double	deltaDistX;
+	double	deltaDistY;
+	double	perpWallDist;
+	int		mapX;
+	int		mapY;
+	int		stepX;
+	int		stepY;
+	int		hit; 
+	int		side;
+
+	int		lineHeight;
+	int		drawStart;
+	int		drawEnd;
+	double 	wallX;
+
+	int		color;
+
+	int		x;
+	int		i;
+
+	double moveSpeed;
+	double rotSpeed;
+	double oldDirX;
+	double oldPlaneX;
+
 	t_data			img_map;
 	t_mini			mini;
 	t_sprite		sprites;
+	t_vectors		mouse;
+	t_vectors		prev_mouse;
 	int				map_max_width;
 	int				map_max_height;
 }				t_all;

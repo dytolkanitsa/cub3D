@@ -6,7 +6,7 @@
 /*   By: lgarg <lgarg@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/01 14:00:18 by mjammie           #+#    #+#             */
-/*   Updated: 2021/08/08 04:11:04 by lgarg            ###   ########.fr       */
+/*   Updated: 2021/08/08 10:47:29 by lgarg            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,12 @@ int	main(int argc, char **argv)
 	all = malloc(sizeof(t_all));
 	all->path = malloc(sizeof(t_paths));
 	all->count = 0;
+	all->player.posX = 0;
+	all->player.posY = 0;
+	all->player.prevX = 0;
+	all->player.prevY = 0;
+	all->mouse.x = -1;
+	all->prev_mouse.x = -1l;
 	if (argc == 2)
 	{
 		int from;

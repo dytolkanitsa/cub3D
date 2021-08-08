@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjammie <mjammie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lgarg <lgarg@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 13:55:42 by mjammie           #+#    #+#             */
-/*   Updated: 2021/08/07 20:59:00 by mjammie          ###   ########.fr       */
+/*   Updated: 2021/08/08 11:14:37 by lgarg            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,33 +65,33 @@ void	optimization_color_img(t_all *all, int ***arr, char *path)
 
 void print(t_all *all) 
 {
-	double	cameraX;
-	double	rayDirX;
-	double	rayDirY;
-	double	sideDistX;
-	double	sideDistY;
-	double	deltaDistX;
-	double	deltaDistY;
-	double	perpWallDist;
-	int		mapX;
-	int		mapY;
-	int		stepX;
-	int		stepY;
-	int		hit; 
-	int		side;
+	// double	cameraX;
+	// double	rayDirX;
+	// double	rayDirY;
+	// double	sideDistX;
+	// double	sideDistY;
+	// double	deltaDistX;
+	// double	deltaDistY;
+	// double	perpWallDist;
+	// int		mapX;
+	// int		mapY;
+	// int		stepX;
+	// int		stepY;
+	// int		hit; 
+	// int		side;
 
-	int		lineHeight;
-	int		drawStart;
-	int		drawEnd;
-	double 	wallX;
+	// int		lineHeight;
+	// int		drawStart;
+	// int		drawEnd;
+	// double 	wallX;
 
-	int		color;
+	// int		color;
 
-	int		x;
-	int		i;
+	// int		x;
+	// int		i;
 
-	x = 0;
-	color = 0;
+	all->x = 0;
+	all->color = 0;
 	optimization_color_img(all, &all->colors_north, all->path->north_path);
 	optimization_color_img(all, &all->colors_south, all->path->south_path);
 	optimization_color_img(all, &all->colors_west, all->path->west_path);
@@ -100,138 +100,193 @@ void print(t_all *all)
 	double step = 0;
 	double texPos = 0;
 	int texY = 0;
-	while (x < SCREEN_WIDTH)
+	while (all->x < SCREEN_WIDTH)
 	{
-		cameraX = 2 * x / (double)SCREEN_WIDTH - 1;
-		rayDirX = all->player.dirX + all->player.planeX * cameraX;
-		rayDirY = all->player.dirY + all->player.planeY * cameraX;
-		mapX = (int)(all->player.posX);
-		mapY = (int)(all->player.posY);
-		deltaDistX = fabs(1 / rayDirX);
-		deltaDistY = fabs(1 / rayDirY);
-		hit = 0; 
-		if(rayDirX < 0)
+		all->cameraX = 2 * all->x / (double)SCREEN_WIDTH - 1;
+		all->rayDirX = all->player.dirX + all->player.planeX * all->cameraX;
+		all->rayDirY = all->player.dirY + all->player.planeY * all->cameraX;
+		all->mapX = (int)(all->player.posX);
+		all->mapY = (int)(all->player.posY);
+		all->deltaDistX = fabs(1 / all->rayDirX);
+		all->deltaDistY = fabs(1 / all->rayDirY);
+		all->hit = 0; 
+		if(all->rayDirX < 0)
 		{
-			stepX = -1;
-			sideDistX = (all->player.posX - mapX) * deltaDistX;
+			all->stepX = -1;
+			all->sideDistX = (all->player.posX - all->mapX) * all->deltaDistX;
 		}
 		else
 		{
-			stepX = 1;
-			sideDistX = (mapX + 1.0 - all->player.posX) * deltaDistX;
+			all->stepX = 1;
+			all->sideDistX = (all->mapX + 1.0 - all->player.posX) * all->deltaDistX;
 		}
-		if(rayDirY < 0)
+		if(all->rayDirY < 0)
 		{
-			stepY = -1;
-			sideDistY = (all->player.posY - mapY) * deltaDistY;
+			all->stepY = -1;
+			all->sideDistY = (all->player.posY - all->mapY) * all->deltaDistY;
 		}
 		else
 		{
-			stepY = 1;
-			sideDistY = (mapY + 1.0 - all->player.posY) * deltaDistY;
+			all->stepY = 1;
+			all->sideDistY = (all->mapY + 1.0 - all->player.posY) * all->deltaDistY;
 		}
-		while (hit == 0)
+		while (all->hit == 0)
 		{
-			if (sideDistX < sideDistY)
+			if (all->sideDistX < all->sideDistY)
 			{
-				sideDistX += deltaDistX;
-				mapX += stepX;
-				side = 0;
+				all->sideDistX += all->deltaDistX;
+				all->mapX += all->stepX;
+				all->side = 0;
 			}
 			else
 			{
-				sideDistY += deltaDistY;
-				mapY += stepY;
-				side = 1;
+				all->sideDistY += all->deltaDistY;
+				all->mapY += all->stepY;
+				all->side = 1;
 			}
-			if (all->map[mapX][mapY] > 0)
+			if (all->map[all->mapX][all->mapY] > 0)
 			{
-				hit = 1;
+				all->hit = 1;
 			}
 		}
-		if (side == 0)
-			perpWallDist = (mapX - all->player.posX + (1 - stepX) / 2) / rayDirX;
+		if (all->side == 0)
+			all->perpWallDist = (all->mapX - all->player.posX + (1 - all->stepX) / 2) / all->rayDirX;
 		else
-			perpWallDist = (mapY - all->player.posY + (1 - stepY) / 2) / rayDirY;
-		lineHeight = (int)(SCREEN_HEIGHT / perpWallDist);
-		drawStart = -lineHeight / 2 + SCREEN_HEIGHT / 2;
-		if (drawStart < 0)
-			drawStart = 0;
-		drawEnd = lineHeight / 2 + SCREEN_HEIGHT / 2;
-		if(drawEnd >= SCREEN_HEIGHT)
-			drawEnd = SCREEN_HEIGHT - 1;
+			all->perpWallDist = (all->mapY - all->player.posY + (1 - all->stepY) / 2) / all->rayDirY;
+		all->lineHeight = (int)(SCREEN_HEIGHT / all->perpWallDist);
+		all->drawStart = -all->lineHeight / 2 + SCREEN_HEIGHT / 2;
+		if (all->drawStart < 0)
+			all->drawStart = 0;
+		all->drawEnd = all->lineHeight / 2 + SCREEN_HEIGHT / 2;
+		if(all->drawEnd >= SCREEN_HEIGHT)
+			all->drawEnd = SCREEN_HEIGHT - 1;
 		
-		if (side == 0)
-			wallX = all->player.posY + perpWallDist * rayDirY;
+		if (all->side == 0)
+			all->wallX = all->player.posY + all->perpWallDist * all->rayDirY;
 		else
-			wallX = all->player.posX + perpWallDist * rayDirX;
-		wallX -= floor((wallX));
+			all->wallX = all->player.posX + all->perpWallDist * all->rayDirX;
+		all->wallX -= floor((all->wallX));
 
-		int texX = (int)(wallX * (double)texWidth);
-		if (side == 0 && rayDirX > 0)
+		int texX = (int)(all->wallX * (double)texWidth);
+		if (all->side == 0 && all->rayDirX > 0)
 			texX = texWidth - texX - 1;
-		if (side == 1 && rayDirY < 0)
+		if (all->side == 1 && all->rayDirY < 0)
 			texX = texWidth - texX - 1;
 		
-		step = 1.0 * 64 / lineHeight;
-		texPos = (drawStart - SCREEN_HEIGHT / 2 + lineHeight / 2) * step;
+		step = 1.0 * 64 / all->lineHeight;
+		texPos = (all->drawStart - SCREEN_HEIGHT / 2 + all->lineHeight / 2) * step;
 		texY = 0;
-		i = 0;
-		if (i < drawStart)
+		all->i = 0;
+		if (all->i < all->drawStart)
 		{
-			while (i < drawStart)
+			while (all->i < all->drawStart)
 			{
-				my_mlx_pixel_put(&all->img, x, i, all->path->celling_colour);
-				i++;
+				my_mlx_pixel_put(&all->img, all->x, all->i, all->path->celling_colour);
+				all->i++;
 			}
 		}
-		while (i < drawEnd)
+		while (all->i < all->drawEnd)
 		{
 			texY = (int)texPos & (64 - 1);
 			texPos += step;
-			if (side == 0) 
+			if (all->side == 0) 
 			{
-				if (stepX > 0)
-					color = all->colors_south[texX][texY]; //S
+				if (all->stepX > 0)
+					all->color = all->colors_south[texX][texY]; //S
 				else
-					color = all->colors_north[texX][texY]; //N
+					all->color = all->colors_north[texX][texY]; //N
 			} 
 			else
 			{
-				if (stepY < 0)
-					color = all->colors_west[texX][texY]; //W
+				if (all->stepY < 0)
+					all->color = all->colors_west[texX][texY]; //W
 				else
-					color = all->colors_east[texX][texY]; //E
+					all->color = all->colors_east[texX][texY]; //E
 			}
-			if (side == 1)
-				color = (color >> 1) & 8355711;
-			my_mlx_pixel_put(&all->img, x, i, color);
-			i++;
+			if (all->side == 1)
+				all->color = (all->color >> 1) & 8355711;
+			my_mlx_pixel_put(&all->img, all->x, all->i, all->color);
+			all->i++;
 		}
-		while (i < SCREEN_HEIGHT)
+		while (all->i < SCREEN_HEIGHT)
 		{
-			my_mlx_pixel_put(&all->img, x, i, all->path->floor_colour);
-			i++;
+			my_mlx_pixel_put(&all->img, all->x, all->i, all->path->floor_colour);
+			all->i++;
 		}
-		x++;
+		all->x++;
 	}
 	
 	mlx_put_image_to_window(all->mlx.mlx, all->mlx.win, all->img.img, 0, 0);
 }
 
+void	turn_right(t_all *all)
+{
+	all->oldDirX = all->player.dirX;
+	all->oldPlaneX = all->player.planeX;
+	
+	all->player.dirX = all->player.dirX * cos(all->rotSpeed) - all->player.dirY * sin(all->rotSpeed);
+	all->player.dirY = all->oldDirX * sin(all->rotSpeed) + all->player.dirY * cos(all->rotSpeed);
+	all->player.planeX = all->player.planeX * cos(all->rotSpeed) - all->player.planeY * sin(all->rotSpeed);
+	all->player.planeY = all->oldPlaneX * sin(all->rotSpeed) + all->player.planeY * cos(all->rotSpeed);
+}
+
+void	turn_left(t_all *all)
+{
+	all->oldDirX = all->player.dirX;
+	all->oldPlaneX = all->player.planeX;
+	all->player.dirX = all->player.dirX * cos(-all->rotSpeed) - all->player.dirY * sin(-all->rotSpeed);
+	all->player.dirY = all->oldDirX * sin(-all->rotSpeed) + all->player.dirY * cos(-all->rotSpeed);
+	all->player.planeX = all->player.planeX * cos(-all->rotSpeed) - all->player.planeY * sin(-all->rotSpeed);
+	all->player.planeY = all->oldPlaneX * sin(-all->rotSpeed) + all->player.planeY * cos(-all->rotSpeed);
+}
+
+void	go_up(t_all *all)
+{
+	if (all->map[(int)(all->player.posX + all->player.dirX * all->moveSpeed)][(int)(all->player.posY)] == 0) 
+		all->player.posX += all->player.dirX * all->moveSpeed;
+	if (all->map[(int)(all->player.posX)][(int)(all->player.posY + all->player.dirY * all->moveSpeed)] == 0) 
+		all->player.posY += all->player.dirY * all->moveSpeed;
+}
+
+void	go_down(t_all *all)
+{
+	if (all->map[(int)(all->player.posX - all->player.dirX * all->moveSpeed)][(int)(all->player.posY)] == 0) 
+		all->player.posX -= all->player.dirX * all->moveSpeed;
+	if (all->map[(int)(all->player.posX)][(int)(all->player.posY - all->player.dirY * all->moveSpeed)] == 0) 
+		all->player.posY -= all->player.dirY * all->moveSpeed;
+}
+
+void	go_left(t_all *all)
+{
+	if (all->map[(int)(all->player.posX - all->player.dirY * all->moveSpeed)][(int)(all->player.posY)] == 0) 
+		all->player.posX -= all->player.dirY * all->moveSpeed;
+	if (all->map[(int)(all->player.posX)][(int)(all->player.posY + all->player.dirX * all->moveSpeed)] == 0) 
+		all->player.posY += all->player.dirX * all->moveSpeed;
+}
+
+void	go_right(t_all *all)
+{
+	if (all->map[(int)(all->player.posX + all->player.dirY * all->moveSpeed)][(int)(all->player.posY)] == 0) 
+		all->player.posX += all->player.dirY * all->moveSpeed;
+	if (all->map[(int)(all->player.posX)][(int)(all->player.posY - all->player.dirX * all->moveSpeed)] == 0) 
+		all->player.posY -= all->player.dirX * all->moveSpeed;
+}
+
+
+
 int	key_hook(int keycode, t_all *all)
 {
-	double moveSpeed;
-	double rotSpeed;
-	double oldDirX;
-	double oldPlaneX;
+	// double moveSpeed;
+	// double rotSpeed;
+	// double oldDirX;
+	// double oldPlaneX;
 	int		x;
 	int		y;
 
-	rotSpeed = 0.1;
-	oldDirX = all->player.dirX;
-	oldPlaneX = all->player.planeX;
-	moveSpeed = 0.1;
+	all->rotSpeed = 0.1;
+	// all->oldDirX = all->player.dirX;
+	// all->oldPlaneX = all->player.planeX;
+	all->moveSpeed = 0.1;
 	if (all->mini.on % 2 == 0)
 	{
 		mlx_destroy_image(all->mlx.mlx, all->img_map.img);
@@ -244,46 +299,44 @@ int	key_hook(int keycode, t_all *all)
 	}
 	if (keycode == 13 || keycode == 126) //w
 	{
-		if (all->map[(int)(all->player.posX + all->player.dirX * moveSpeed)][(int)(all->player.posY)] == 0) 
-			all->player.posX += all->player.dirX * moveSpeed;
-		if (all->map[(int)(all->player.posX)][(int)(all->player.posY + all->player.dirY * moveSpeed)] == 0) 
-			all->player.posY += all->player.dirY * moveSpeed;
+		go_up(all);
+		// if (all->map[(int)(all->player.posX + all->player.dirX * all->moveSpeed)][(int)(all->player.posY)] == 0) 
+		// 	all->player.posX += all->player.dirX * all->moveSpeed;
+		// if (all->map[(int)(all->player.posX)][(int)(all->player.posY + all->player.dirY * all->moveSpeed)] == 0) 
+		// 	all->player.posY += all->player.dirY * all->moveSpeed;
 	}
 	if (keycode == 1 || keycode == 125) //s
 	{
-		if (all->map[(int)(all->player.posX - all->player.dirX * moveSpeed)][(int)(all->player.posY)] == 0) 
-			all->player.posX -= all->player.dirX * moveSpeed;
-		if (all->map[(int)(all->player.posX)][(int)(all->player.posY - all->player.dirY * moveSpeed)] == 0) 
-			all->player.posY -= all->player.dirY * moveSpeed;
+		go_down(all);
+		// if (all->map[(int)(all->player.posX - all->player.dirX * all->moveSpeed)][(int)(all->player.posY)] == 0) 
+		// 	all->player.posX -= all->player.dirX * all->moveSpeed;
+		// if (all->map[(int)(all->player.posX)][(int)(all->player.posY - all->player.dirY * all->moveSpeed)] == 0) 
+		// 	all->player.posY -= all->player.dirY * all->moveSpeed;
 	}
-	if (keycode == 124 || keycode == 2) //d = 2
+	if (keycode == 124 /*|| keycode == 2*/) //d = 2
 	{
-		all->player.dirX = all->player.dirX * cos(-rotSpeed) - all->player.dirY * sin(-rotSpeed);
-		all->player.dirY = oldDirX * sin(-rotSpeed) + all->player.dirY * cos(-rotSpeed);
-		all->player.planeX = all->player.planeX * cos(-rotSpeed) - all->player.planeY * sin(-rotSpeed);
-		all->player.planeY = oldPlaneX * sin(-rotSpeed) + all->player.planeY * cos(-rotSpeed);
+		turn_left(all);
 	}
-	if (keycode == 123 || keycode == 0) //a = 0
+	if (keycode == 123 /*|| keycode == 0*/) //a = 0
 	{
-		all->player.dirX = all->player.dirX * cos(rotSpeed) - all->player.dirY * sin(rotSpeed);
-		all->player.dirY = oldDirX * sin(rotSpeed) + all->player.dirY * cos(rotSpeed);
-		all->player.planeX = all->player.planeX * cos(rotSpeed) - all->player.planeY * sin(rotSpeed);
-		all->player.planeY = oldPlaneX * sin(rotSpeed) + all->player.planeY * cos(rotSpeed);
+		turn_right(all);
 	}
-	// if (keycode == 2)
-	// {
-	// 	if (all->map[(int)(all->player.posX + all->player.dirY * moveSpeed)][(int)(all->player.posY)] == 0) 
-	// 		all->player.posX += all->player.dirY * moveSpeed;
-	// 	if (all->map[(int)(all->player.posX)][(int)(all->player.posY - all->player.dirX * moveSpeed)] == 0) 
-	// 		all->player.posY -= all->player.dirX * moveSpeed;
-	// }
-	// if (keycode == 0)
-	// {
-	// 	if (all->map[(int)(all->player.posY - all->player.dirY * moveSpeed)][(int)(all->player.posY)] == 0) 
-	// 		all->player.posX -= all->player.dirY * moveSpeed;
-	// 	if (all->map[(int)(all->player.posX)][(int)(all->player.posY + all->player.dirX * moveSpeed)] == 0) 
-	// 		all->player.posY += all->player.dirX * moveSpeed;
-	// }
+	if (keycode == 2) //d
+	{
+		go_right(all);
+		// if (all->map[(int)(all->player.posX + all->player.dirY * all->moveSpeed)][(int)(all->player.posY)] == 0) 
+		// 	all->player.posX += all->player.dirY * all->moveSpeed;
+		// if (all->map[(int)(all->player.posX)][(int)(all->player.posY - all->player.dirX * all->moveSpeed)] == 0) 
+		// 	all->player.posY -= all->player.dirX * all->moveSpeed;
+	}
+	if (keycode == 0) //a
+	{
+		go_left(all);
+		// if (all->map[(int)(all->player.posX - all->player.dirY * all->moveSpeed)][(int)(all->player.posY)] == 0) 
+		// 	all->player.posX -= all->player.dirY * all->moveSpeed;
+		// if (all->map[(int)(all->player.posX)][(int)(all->player.posY + all->player.dirX * all->moveSpeed)] == 0) 
+		// 	all->player.posY += all->player.dirX * all->moveSpeed;
+	}
 	mlx_destroy_image(all->mlx.mlx, all->img.img);
 	all->img.img = mlx_new_image(all->mlx.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	all->img.addr = mlx_get_data_addr(all->img.img, &all->img.bits_per_pixel, &all->img.line_length, &all->img.endian);
@@ -306,6 +359,31 @@ int	key_hook(int keycode, t_all *all)
 int	mouse_hook(int keycode, t_all *all)
 {
 	printf("%d\n", keycode);
+	return (0);
+}
+
+int	mouse_movement(int x, int y, t_all *all)
+{	
+	if (all->mouse.x == -1)
+	{
+		all->mouse.x = x;
+		all->prev_mouse.x = x;
+		all->mouse.y = y;
+		all->prev_mouse.y = y;
+	}
+	else
+	{
+		all->prev_mouse.x = all->mouse.x;
+		all->mouse.x = x;
+		all->prev_mouse.y = all->mouse.y;
+		all->mouse.y = y;
+	}
+	printf("%d\n",all->prev_mouse.x);
+	printf("%d\n",all->mouse.x);
+	if ((all->mouse.x < (all->map_max_width / 2) && all->mouse.x < all->prev_mouse.x))
+		turn_right(all);
+	if ((all->mouse.x > (all->map_max_width / 2) && all->mouse.x > all->prev_mouse.x))
+		turn_left(all);
 	return (0);
 }
 
@@ -332,6 +410,7 @@ void	raycaster(t_all *all)
 	mlx_mouse_move(all->mlx.win, x, y);
 	mlx_hook(all->mlx.win, 17, 1L << 0, close_win, &all->img);
 	mlx_hook(all->mlx.win, 2, 1L << 0, key_hook, all);
-	mlx_mouse_hook(all->mlx.win, mouse_hook, all);
+	// mlx_mouse_hook(all->mlx.win, mouse_hook, all);
+	// mlx_hook(all->mlx.win, 6, 1L << 6, &mouse_movement, all);
 	mlx_loop(all->mlx.mlx);
 }
