@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   surrounded.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarg <lgarg@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mjammie <mjammie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 02:38:27 by lgarg             #+#    #+#             */
-/*   Updated: 2021/08/05 03:00:53 by lgarg            ###   ########.fr       */
+/*   Updated: 2021/08/05 18:31:47 by mjammie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,18 @@ int	check_first_last_line(char *line) // чек верхней и нижней �
 	return (0);
 }
 
-int	if_surrounded_by_wals(t_lst *lst, t_map map)
+int	if_surrounded_by_wals(t_lst *lst, t_all *all)
 {
 	int	i;
 	int	len;
 
-	len = ft_splitlen(map.map);
+	len = ft_splitlen(all->map_c);
 	i = 0;
-	while (map.map[i])
+	while (all->map_c[i])
 	{
 		if (i == 0 || i == len - 1)
 		{
-			if (check_first_last_line(map.map[i]))
+			if (check_first_last_line(all->map_c[i]))
 			{
 				lst->error = BAD_MAP;
 				return (1); // плохо
@@ -69,7 +69,7 @@ int	if_surrounded_by_wals(t_lst *lst, t_map map)
 		}
 		else 
 		{
-			if (check_line_for_wals(map.map[i], map.map[i + 1], map.map[i - 1]))
+			if (check_line_for_wals(all->map_c[i], all->map_c[i + 1], all->map_c[i - 1]))
 			{
 				lst->error = BAD_MAP;
 				return (1); // плохо

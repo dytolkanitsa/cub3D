@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   corners.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarg <lgarg@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mjammie <mjammie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 02:34:52 by lgarg             #+#    #+#             */
-/*   Updated: 2021/08/05 03:01:11 by lgarg            ###   ########.fr       */
+/*   Updated: 2021/08/05 18:30:53 by mjammie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,18 @@ int	check_first_corner(char *line, char *next)
 	return (0);
 }
 
-int	check_corners(t_lst *lst, t_map map)
+int	check_corners(t_lst *lst, t_all *all)
 {
 	int	i;
 	int	len;
 
 	i = 0;
-	len = ft_splitlen(map.map);
-	while (map.map[i])
+	len = ft_splitlen(all->map_c);
+	while (all->map_c[i])
 	{
 		if (i == 0)
 		{
-			if (check_first_corner(map.map[i], map.map[i + 1]))
+			if (check_first_corner(all->map_c[i], all->map_c[i + 1]))
 			{
 				lst->error = BAD_MAP;
 				return (1); // плохо
@@ -65,7 +65,7 @@ int	check_corners(t_lst *lst, t_map map)
 		}
 		else if (i == len - 1)
 		{
-			if (check_last_corner(map.map[i], map.map[i - 1]))
+			if (check_last_corner(all->map_c[i], all->map_c[i - 1]))
 			{
 				lst->error = BAD_MAP;
 				return (1); // плохо
@@ -75,7 +75,7 @@ int	check_corners(t_lst *lst, t_map map)
 		}
 		else
 		{
-			if (check_first_corner(map.map[i], map.map[i + 1]))
+			if (check_first_corner(all->map_c[i], all->map_c[i + 1]))
 			{
 				lst->error = BAD_MAP;
 				return (1); // плохо

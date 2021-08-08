@@ -12,7 +12,7 @@ LIST_PARSER = $(shell find ./parser -name "*.c")
 
 FLAGS = 
 
-# FLAGS_MLX = -lmlx -framework OpenGL -framework AppKit
+FLAGS_MLX = libmlx.dylib -lmlx -framework OpenGL -framework AppKit
 
 OBJ = $(LIST:.c=.o)
 
@@ -30,10 +30,10 @@ all : $(NAME)
 	gcc -g $(FLAGS) -I $(HEADER) -c $< -o $@
 
 ${NAME} : $(OBJ) $(OBJ_UTILS) $(OBJ_MAP) $(OBJ_PARSER) $(HEADER)
-	gcc $(FLAGS) $(OBJ) $(OBJ_UTILS) $(OBJ_MAP) $(OBJ_PARSER) -o $(NAME)
+	gcc $(FLAGS) $(FLAGS_MLX) $(OBJ) $(OBJ_UTILS) $(OBJ_MAP) $(OBJ_PARSER) -o $(NAME)
 
 clean :
-	$(RM) $(OBJ) $(OBJ_UTILS) $(OBJ_PARSER)
+	$(RM) $(OBJ) $(OBJ_UTILS) $(OBJ_MAP) $(OBJ_PARSER)
 
 fclean : clean
 	$(RM) $(NAME)

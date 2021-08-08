@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarg <lgarg@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mjammie <mjammie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/02 16:05:01 by lgarg             #+#    #+#             */
-/*   Updated: 2021/08/02 16:05:12 by lgarg            ###   ########.fr       */
+/*   Created: 2021/08/02 18:09:02 by mjammie           #+#    #+#             */
+/*   Updated: 2021/08/02 18:09:20 by mjammie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3D.h"
+#include "../includes/cub3d.h"
 
 void	ft_putchar_fd(char c, int fd)
 {
