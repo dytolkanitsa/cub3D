@@ -10,7 +10,7 @@ LIST_MAP = $(shell find ./work_with_map -name "*.c")
 
 LIST_PARSER = $(shell find ./parser -name "*.c")
 
-FLAGS = 
+FLAGS = -Wall -Wextra -Werror
 
 FLAGS_MLX = libmlx.dylib -lmlx -framework OpenGL -framework AppKit
 

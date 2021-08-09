@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_info.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjammie <mjammie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lgarg <lgarg@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/05 01:39:35 by lgarg             #+#    #+#             */
-/*   Updated: 2021/08/06 21:05:17 by mjammie          ###   ########.fr       */
+/*   Updated: 2021/08/09 13:07:46 by lgarg            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,4 @@ void	parse_info(t_lst *lst, t_all *all)
 		lst = lst->next;
 		i++;
 	}
-	// printf("%s\n", path->north_path);
-	// printf("%s\n", path->south_path);
-	// printf("%s\n", path->west_path);
-	// printf("%s\n", path->east_path);
-	// printf("%d\n", path->floor_colour);
-	// printf("%d\n", path->celling_colour);
 }

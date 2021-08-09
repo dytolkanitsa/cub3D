@@ -6,7 +6,7 @@
 /*   By: lgarg <lgarg@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/01 14:00:18 by mjammie           #+#    #+#             */
-/*   Updated: 2021/08/08 10:47:29 by lgarg            ###   ########.fr       */
+/*   Updated: 2021/08/09 16:12:12 by lgarg            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void	check_lst(t_lst *lst, t_all *all)
 	parse_map(all, lst);
 }
 
-void	max_height_map(t_all *all, t_lst *lst)
+void	max_height_map(t_all *all)
 {
 	int	y;
 
@@ -159,6 +159,22 @@ void	max_height_map(t_all *all, t_lst *lst)
 	all->map_max_height = y;
 }
 
+void	init_path(t_all *all)
+{
+	all->path->north_path = NULL;
+	all->path->south_path = NULL;
+	all->path->west_path = NULL;
+	all->path->east_path = NULL;
+	all->path->floor_colour = -1;
+	all->path->celling_colour = -1;
+	all->path->no_count = 0;
+	all->path->so_count = 0;
+	all->path->we_count = 0;
+	all->path->ea_count = 0;
+	all->path->f_count = 0;
+	all->path->c_count = 0;
+}
+
 int	main(int argc, char **argv)
 {
 	t_all	*all;
@@ -166,11 +182,10 @@ int	main(int argc, char **argv)
 	t_lst	*head;
 	int		fd;
 	char	*line;
-	int		from;
+	// int		from;
 	int		try_to_read;
-	char	*buf;
+	char	buf[10];
 
-	buf = malloc((int)10 + 1);
 	all = malloc(sizeof(t_all));
 	all->path = malloc(sizeof(t_paths));
 	all->count = 0;
@@ -178,8 +193,12 @@ int	main(int argc, char **argv)
 	all->player.posY = 0;
 	all->player.prevX = 0;
 	all->player.prevY = 0;
-	all->mouse.x = -1;
-	all->prev_mouse.x = -1l;
+	// all->mouse.x = SCREEN_HEIGHT / 2;
+	// all->mouse.y = SCREEN_WIDTH / 2;
+	// all->mouse.x = -1;
+	// all->prev_mouse.x = -1;
+
+	init_path(all);
 	if (argc == 2)
 	{
 		int from;
@@ -225,6 +244,6 @@ int	main(int argc, char **argv)
 	main_check(lst, all);
 	parse_info(lst, all);
 	change_map_int(all, lst);
-	max_height_map(all, lst);
+	max_height_map(all);
 	raycaster(all);
 }

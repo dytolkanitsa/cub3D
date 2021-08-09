@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjammie <mjammie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lgarg <lgarg@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 15:49:33 by lgarg             #+#    #+#             */
-/*   Updated: 2021/08/07 20:10:34 by mjammie          ###   ########.fr       */
+/*   Updated: 2021/08/09 16:12:39 by lgarg            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	right_simbols_in_map(t_lst *lst, t_all *all) // валидные симво�
 		j = 0;
 		while (all->map_c[i][j])
 		{
+			printf("%c\n", all->map_c[i][j]);
 			if (!ft_check(all->map_c[i][j], "210 NESW"))
 			{
 				lst->error = BAD_MAP;
@@ -87,8 +88,8 @@ void	check_map(t_lst *lst)
 void	main_check(t_lst *lst, t_all *all)
 {
 	if (right_simbols_in_map(lst, all) == 1 || how_many_players(lst, all) == 1 || if_surrounded_by_wals(lst, all) == 1 \
-	|| check_corners(lst, all) == 1 || lst->error != 0 || right_key(lst) == 1 || dublicate_texture(lst) == 1 \
-	|| dublicate_colour(lst) == 1)
+	|| check_corners(lst, all) == 1 || lst->error != 0 || right_key(lst) == 1 || dublicate_texture(lst, all) == 1 \
+	|| dublicate_colour(lst, all) == 1)
 	{
 		check_map(lst);
 	}

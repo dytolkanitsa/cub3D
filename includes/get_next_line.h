@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjammie <mjammie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lgarg <lgarg@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 14:02:34 by mjammie           #+#    #+#             */
-/*   Updated: 2021/08/02 14:02:44 by mjammie          ###   ########.fr       */
+/*   Updated: 2021/08/09 15:46:34 by lgarg            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_params
 }				t_params;
 
 int			get_next_line(int fd, char **line);
-size_t		ft_strlen(const char *str);
+int			ft_strlen(const char *str);
 char		*ft_strjoin(char const *s1, char const *s2);
 char		*ft_strchr(const char *str, int c);
 char		*ft_strdup(const char *str);

@@ -6,7 +6,7 @@
 /*   By: lgarg <lgarg@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/01 14:01:02 by mjammie           #+#    #+#             */
-/*   Updated: 2021/08/08 10:27:07 by lgarg            ###   ########.fr       */
+/*   Updated: 2021/08/09 16:19:05 by lgarg            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,15 @@ typedef struct s_paths
 	char	*east_path;
 	int		floor_colour;
 	int		celling_colour;
+	int		no_count;
+	int		so_count;
+	int		we_count;
+	int		ea_count;
+	int		f_count;
+	int		c_count;
+	int		red;
+	int		green;
+	int		blue;
 }	t_paths;
 
 typedef	struct	s_vectors
@@ -169,12 +178,14 @@ typedef struct s_all
 
 	int		x;
 	int		i;
+	int		exit;
 
 	double moveSpeed;
 	double rotSpeed;
 	double oldDirX;
 	double oldPlaneX;
 
+	int	j;
 	t_data			img_map;
 	t_mini			mini;
 	t_sprite		sprites;
@@ -202,8 +213,8 @@ void	main_check(t_lst *lst, t_all *all);
 void	parse_info(t_lst *lst, t_all *all);
 int		check_key(char *line);
 int		right_key(t_lst *lst);
-int		dublicate_colour(t_lst *lst);
-int		dublicate_texture(t_lst *lst);
+int		dublicate_colour(t_lst *lst, t_all *all);
+int		dublicate_texture(t_lst *lst, t_all *all);
 char	*ft_strnstr(const char *big, const char *little, size_t len);
 int		check_last_corner(char *line, char *last);
 int		check_first_corner(char *line, char *next);
@@ -211,7 +222,7 @@ int		check_corners(t_lst *lst, t_all *all);
 int		if_surrounded_by_wals(t_lst *lst, t_all *all);
 int		check_first_last_line(char *line);
 int		check_line_for_wals(char *line, char *next, char *last);
-char 	ft_check(char c, const char *set);
+char	ft_check(char c, const char *set);
 int		ft_splitlen(char **str);
 
 // parse_info

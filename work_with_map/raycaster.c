@@ -6,7 +6,7 @@
 /*   By: lgarg <lgarg@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 13:55:42 by mjammie           #+#    #+#             */
-/*   Updated: 2021/08/08 11:14:37 by lgarg            ###   ########.fr       */
+/*   Updated: 2021/08/09 15:47:54 by lgarg            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -280,8 +280,8 @@ int	key_hook(int keycode, t_all *all)
 	// double rotSpeed;
 	// double oldDirX;
 	// double oldPlaneX;
-	int		x;
-	int		y;
+	// int		x;
+	// int		y;
 
 	all->rotSpeed = 0.1;
 	// all->oldDirX = all->player.dirX;
@@ -356,43 +356,62 @@ int	key_hook(int keycode, t_all *all)
 	return (0);
 }
 
-int	mouse_hook(int keycode, t_all *all)
+int	mouse_hook(int keycode)
 {
 	printf("%d\n", keycode);
 	return (0);
 }
 
-int	mouse_movement(int x, int y, t_all *all)
-{	
-	if (all->mouse.x == -1)
+void	mouse_move_right(t_all *all)
+{
+	double	mouse_rot_speed;
+
+	mouse_rot_speed = all->rotSpeed / 5;
+	turn_right(all);
+}
+
+void	mouse_move_left(t_all *all)
+{
+	double	mouse_rot_speed;
+
+	mouse_rot_speed = all->rotSpeed / 5;
+	turn_left(all);
+}
+
+int	mouse_movement(int x, int y, void *param)
+{
+	t_all	*all;
+
+	// mlx_mouse_get_pos(all->mlx.win, &x, &y);
+	(void)y;
+	all = (t_all *)param;
+	if (all->mouse.x == 0)
 	{
 		all->mouse.x = x;
-		all->prev_mouse.x = x;
-		all->mouse.y = y;
-		all->prev_mouse.y = y;
+		return (1);
 	}
-	else
-	{
-		all->prev_mouse.x = all->mouse.x;
-		all->mouse.x = x;
-		all->prev_mouse.y = all->mouse.y;
-		all->mouse.y = y;
-	}
-	printf("%d\n",all->prev_mouse.x);
-	printf("%d\n",all->mouse.x);
-	if ((all->mouse.x < (all->map_max_width / 2) && all->mouse.x < all->prev_mouse.x))
-		turn_right(all);
-	if ((all->mouse.x > (all->map_max_width / 2) && all->mouse.x > all->prev_mouse.x))
-		turn_left(all);
+	if (x > all->mouse.x)
+		mouse_move_left(all);
+	else if (x < all->mouse.x)
+		mouse_move_right(all);
+	all->mouse.x = x;
 	return (0);
 }
 
+// int	mouse_exit(int x, int y, t_all *all)
+// {
+// 	all->exit = 0;
+// 	return (0);
+// }
+
+// int	mouse_enter(int x, int y, t_all *all)
+// {
+// 	all->exit = 1;
+// 	return (0);
+// }
+
 void	raycaster(t_all *all)
 {
-	int	x;
-	int	y;
-
-	y = 0;
 	all->mini.on = 1;
 	all->mlx.mlx = mlx_init();
 	all->mlx.win = mlx_new_window(all->mlx.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3D");
@@ -405,12 +424,18 @@ void	raycaster(t_all *all)
 	int	x1;
 	int	y1;
 
-	mlx_mouse_get_pos(all->mlx.win, &x1, &y1);
+	x1 = 0;
+	y1 = 0;
+
+	// mlx_mouse_get_pos(all->mlx.win, &x1, &y1);
 	printf("%d %d\n", x1, y1);
-	mlx_mouse_move(all->mlx.win, x, y);
+	// mlx_mouse_move(all->mlx.win, all->map_max_width / 2, all->map_max_height / 2);
 	mlx_hook(all->mlx.win, 17, 1L << 0, close_win, &all->img);
 	mlx_hook(all->mlx.win, 2, 1L << 0, key_hook, all);
 	// mlx_mouse_hook(all->mlx.win, mouse_hook, all);
+	// mlx_mouse_hide(all->mlx.mlx, all->mlx.win);
 	// mlx_hook(all->mlx.win, 6, 1L << 6, &mouse_movement, all);
+	// mlx_hook(all->mlx.win, 7, 1L << 4, &mouse_enter, all);
+	// mlx_hook(all->mlx.win, 8, 1L << 5, &mouse_exit, all);
 	mlx_loop(all->mlx.mlx);
 }
