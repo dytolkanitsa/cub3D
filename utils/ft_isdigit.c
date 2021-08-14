@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_info.c                                       :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgarg <lgarg@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/05 01:39:35 by lgarg             #+#    #+#             */
-/*   Updated: 2021/08/14 13:16:49 by lgarg            ###   ########.fr       */
+/*   Created: 2021/08/05 03:06:06 by lgarg             #+#    #+#             */
+/*   Updated: 2021/08/13 13:20:01 by lgarg            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3D.h"
 
-void	parse_info(t_lst *lst, t_all *all)
+int	ft_isdigit(int c)
 {
-	int	i;
+	if (c >= 48 && c <= 57)
+		return (1);
+	else
+		return (0);
+}
 
-	i = 0;
-	while (i < all->count)
-	{
-		get_path(lst->str, lst, all);
-		lst = lst->next;
-		i++;
-	}
+int	ft_isdigit_fixed(int c)
+{
+	if ((c >= 48 && c <= 57) || c == ' ')
+		return (1);
+	else
+		return (0);
 }

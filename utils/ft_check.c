@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_info.c                                       :+:      :+:    :+:   */
+/*   ft_check.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgarg <lgarg@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mjammie <mjammie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/05 01:39:35 by lgarg             #+#    #+#             */
-/*   Updated: 2021/08/14 13:16:49 by lgarg            ###   ########.fr       */
+/*   Created: 2021/08/05 02:40:26 by lgarg             #+#    #+#             */
+/*   Updated: 2021/08/09 20:22:33 by mjammie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3D.h"
 
-void	parse_info(t_lst *lst, t_all *all)
+char	ft_check(char c, const char *set)
 {
 	int	i;
 
 	i = 0;
-	while (i < all->count)
+	while (set[i])
 	{
-		get_path(lst->str, lst, all);
-		lst = lst->next;
+		if (set[i] == c)
+			return (1);
 		i++;
 	}
+	return (0);
 }

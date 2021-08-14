@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_info.c                                       :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgarg <lgarg@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/05 01:39:35 by lgarg             #+#    #+#             */
-/*   Updated: 2021/08/14 13:16:49 by lgarg            ###   ########.fr       */
+/*   Created: 2021/08/05 02:34:00 by lgarg             #+#    #+#             */
+/*   Updated: 2021/08/05 03:00:59 by lgarg            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3D.h"
 
-void	parse_info(t_lst *lst, t_all *all)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	int	i;
+	size_t	lenght_l;
 
-	i = 0;
-	while (i < all->count)
+	lenght_l = ft_strlen(little);
+	if (lenght_l == 0)
+		return ((char *)big);
+	while (len >= lenght_l)
 	{
-		get_path(lst->str, lst, all);
-		lst = lst->next;
-		i++;
+		if (*big == *little && (ft_strncmp(big, little, lenght_l) == 0))
+			return ((char *)big);
+		big++;
+		len--;
 	}
+	return (0);
 }
