@@ -17,8 +17,8 @@
 # include "../minilibx_mms_20200219/mlx.h"
 # include <math.h>
 # include <unistd.h>
-# define SCREEN_WIDTH 1920
-# define SCREEN_HEIGHT 1080
+# define SCREEN_WIDTH 600
+# define SCREEN_HEIGHT 800
 # define TEX_WIDTH 64
 # define TEX_HEIGHT 64
 

@@ -1,10 +1,10 @@
-NO ./textures/colorstone.xpm
-SO ./textures/redbrick.xpm
-WE ./textures/wood.xpm
-EA ./textures/greystone.xpm
+NO ./textures/sparcles.xpm
+SO ./textures/crasota.xpm
+WE ./textures/dark.xpm
+EA ./textures/what.xpm
 
-F 53,39,92
-C 85,177,217
+F 53,39,92 
+C 255,177,217
 
 1111111111111111111111111111111111111111111111111111111111111111111111111111111
 1000000000000000000011111111111111000100011100011100000000000000000000000000001
