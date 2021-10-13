@@ -14,7 +14,8 @@ LIST_MOVES = $(shell find ./moves -name "*.c")
 
 FLAGS = -Wall -Wextra -Werror
 
-FLAGS_MLX = -L/Users/daryatolkanitsar/cub3D -lmlx -framework OpenGL -framework AppKit
+# FLAGS_MLX = -L/Users/<username>/cub3D -lmlx -framework OpenGL -framework AppKit
+FLAGS_MLX = libmlx.dylib -lmlx -framework OpenGL -framework AppKit
 
 OBJ = $(LIST:.c=.o)
 
