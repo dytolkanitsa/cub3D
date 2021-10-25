@@ -29,7 +29,4 @@ The goal is to make a dynamic view inside a maze, in which player will have to f
 
 * Except for the map content which always has to be the last, each type ofelement can be set in any order in the file.
 
-* Each element (except the map) firsts information is the type identifier (com-posed by one or two character(s)), followed by all specific informations for eachobject in a strict order such as:
-<br/>`NO ./path_to_the_north_texture`
-	* identifier: **NO**
-	* path to the north texure
+* Each element (except the map) firsts information is the type identifier (com-posed by one or two character(s)), followed by all specific informations for eachobject in a strict order.
